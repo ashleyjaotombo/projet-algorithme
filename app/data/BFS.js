@@ -5,9 +5,9 @@ const NANTES = [45, 0, 70, 0, 80, 0, 0, 90, 0, 0];
 const PARIS = [110, 50, 120, 80, 0, 60, 0, 150, 0, 0];
 const DIJON = [0, 0, 100, 0, 60, 0, 75, 0, 70, 75];
 const NANCY = [0, 0, 0, 0, 0, 75, 0, 0, 90, 80];
-const BORDEAUX = [130, 0, 0, 90, 150, 0, 0, 0, 100, 40];
+const BORDEAUX = [130, 0, 0, 90, 150, 0, 0, 0, 100, 0];
 const LYON = [0, 0, 0, 0, 0, 70, 90, 100, 0, 40];
-const GRENOBLE = [0, 0, 0, 0, 0, 75, 80, 40, 40, 0];
+const GRENOBLE = [0, 0, 0, 0, 0, 75, 80, 0, 40, 0];
 
 export const MATRICE = [
     RENNES, CAEN, LILLE, NANTES, PARIS,
