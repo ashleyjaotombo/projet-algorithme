@@ -5,6 +5,9 @@ import { DFS } from '~/data/DFS';
 BFS("Caen");
 DFS("Caen");
 
+         // <v-list :items="items"></v-list>
+
+
 const items = [
     {
       title: 'Algorithme de parcours',
@@ -26,20 +29,29 @@ const items = [
 </script>
 
 <template>
-  <h1 class="font-bold text-center text-red">PROJET - ALGORITHME ET THÉORIES DES GRAPHES</h1>
-    <v-row class="bg-red" height="600">
+  <v-container>
+    <h1 class="font-bold text-center text-red">PROJET - ALGORITHME ET THÉORIES DES GRAPHES</h1>
+    <v-row class="" height="600">
       <v-col cols="6">
-        <v-img src="/graphe.jpg" width="900" height="500"></v-img>
+        <v-img src="/graphe.jpg" width="900" height="500"/>
       </v-col>
       <v-col cols="6" class="d-flex align-center justify-center">
         <v-card
           class="mx-auto rounded-xl mt-200"
           max-width="500" max-height="240"
         >
-          <v-list :items="items"></v-list>
+          <v-list density="compact">
+            <v-list-item v-for="(item, index) in items" :key="index" :value="item" color="primary"> 
+              <NuxtLink :to="`/${item.value}/`"  class="text-decoration-none text-white">
+                <v-list-item-title>{{item.title}}</v-list-item-title>
+              </NuxtLink>
+            </v-list-item>
+          
+          </v-list>
         </v-card>
       </v-col>
     </v-row>
+  </v-container>
   
   
   
