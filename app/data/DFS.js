@@ -20,33 +20,50 @@ export function DFS(nomVilleDepart) {
         "Dijon", "Nancy", "Bordeaux", "Lyon", "Grenoble"
     ];
 
-    const start = VILLES.indexOf(nomVilleDepart);
-    if (start === -1) { console.error("Ville inconnue:", nomVilleDepart); return; }
+    //On récupère l'index de la ville séléctionnée dans notre tableau VILLES
+    const depart = VILLES.indexOf(nomVilleDepart);
 
     const n = MATRICE.length;
-    const vu = Array(n).fill(false);
-    const pere = Array(n).fill(null);
+
+    //Initialisation du tableau Vu avec false
+    const vu = [n];
+    for (let i = 0; i < n; i++) {
+        vu[i] = false;
+    }
+
+    //Initialisation du tableau pere avec null
+    const pere = [n];
+    for (let i = 0; i < n; i++) {
+        pere[i] = null;
+    }
+
+    //Initialisation du tableau qui contiendra l'ordre des sommets parcourus
     const ordre = [];
 
+    //Définition de notre fonction récursive
     function explorer(u) {
         vu[u] = true;
         ordre.push(u);
 
-        // voisins non vus triés par poids croissant
+        // On récupère les voisins du sommet courant
         const voisins = [];
+
         for (let v = 0; v < n; v++) {
             if (MATRICE[u][v] !== 0 && !vu[v]) voisins.push([v, MATRICE[u][v]]);
+            // exemple de push [1, 180] (1 pour sommet Rennes et 180 pour le poids)
         }
+        //On trie les voisins selon leurs poids (croissant)
         voisins.sort((a, b) => a[1] - b[1]);
 
+        //On explore tous les voisins du sommet courant
         for (const [v] of voisins) {
             if (!vu[v]) { pere[v] = u; explorer(v); }
         }
     }
 
-    explorer(start);
+    explorer(depart);
 
-    console.log("Ordre de visite :", ordre.map(i => VILLES[i]).join(" → "));
     const results = ordre.map(i => VILLES[i]).join(" → ");
+
     return results;
 }

@@ -9,30 +9,27 @@ const BORDEAUX = [130, 0, 0, 90, 150, 0, 0, 0, 100, 0];
 const LYON = [0, 0, 0, 0, 0, 70, 90, 100, 0, 40];
 const GRENOBLE = [0, 0, 0, 0, 0, 75, 80, 0, 40, 0];
 
-export const MATRICE = [
+const MATRICE = [
     RENNES, CAEN, LILLE, NANTES, PARIS,
     DIJON, NANCY, BORDEAUX, LYON, GRENOBLE
 ];
 
-export const VILLES = [
+const VILLES = [
     "Rennes", "Caen", "Lille", "Nantes", "Paris",
     "Dijon", "Nancy", "Bordeaux", "Lyon", "Grenoble"
 ];
 
-// --- Parcours en largeur pondéré (par nom) ---
+// Parcours en largeur pondéré
 export function BFS(nomVilleDepart) {
+    //On récupère l'index de la ville séléctionnée dans notre tableau VILLES
     const depart = VILLES.indexOf(nomVilleDepart);
 
-    // Vérifie que la ville existe
-    if (depart === -1) {
-        return;
-    }
-
+    //On initialise les tableaux etat, pere et atraiter
     const etat = [];
     const pere = [];
     const atraiter = [];
 
-    // Initialisation
+    // Initialisation de nos tableaux
     for (let x = 0; x < MATRICE.length; x++) {
         etat[x] = "Non vu";
         pere[x] = null;
@@ -41,20 +38,21 @@ export function BFS(nomVilleDepart) {
     let i = 0;
     let j = 0;
 
-    // Enfile la ville de départ
+    // On démarre avec la ville de départ
     atraiter[j++] = depart;
     etat[depart] = "Vu";
 
 
-    // --- Boucle principale ---
+    // On commence la boucle principale
     while (i < j) {
-        const y = atraiter[i++]; // défiler
+        const y = atraiter[i++];
 
-        // Récupère les successeurs non vus avec leur poids
+        // On récupère les successeurs non vus en prenant en compte leur poids
         const successeurs = [];
         for (let z = 0; z < MATRICE.length; z++) {
             if (MATRICE[y][z] !== 0 && etat[z] === "Non vu") {
                 successeurs.push({ index: z, poids: MATRICE[y][z] });
+                //MATRICE[y][z] représente le poids, qui nous aidera à trier dans l'ordre croissant les sommets pouvant être parcourus en même temps
             }
         }
 
@@ -69,10 +67,6 @@ export function BFS(nomVilleDepart) {
         }
     }
 
-    // --- Affichage des résultats ---
-    //console.log("\n--- Résultats finaux ---");
-    //console.log("Ordre de visite :", atraiter.map(i => VILLES[i]).join(" → "));
-    //console.log("Pères :", pere.map(p => (p !== null ? VILLES[p] : "null")));
     const results = atraiter.map(i => VILLES[i]).join(" → ");
     return results;
 }
