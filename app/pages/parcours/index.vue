@@ -30,7 +30,7 @@ const methode=ref(false);
 const items = ["Rennes", "Caen", "Lille", "Nantes", "Paris", "Dijon", "Nancy", "Bordeaux", "Lyon", "Grenoble"];
 const ville = ref("");
 const submit = ref(false);
-const results = ref(BFS(ville));
+const results = ref();
 
 if (submit.value == true){
     results = ref(BFS(ville))
