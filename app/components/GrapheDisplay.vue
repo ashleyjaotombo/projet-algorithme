@@ -1,5 +1,7 @@
 <template>
-  <v-container id="mynetwork" class="bg-blue"></v-container>
+
+<div id="mynetwork" style="height: 100%; width: 100%;" class="object-cover"></div>
+  
 </template>
 
 <script setup>
@@ -8,10 +10,9 @@ import { onMounted } from 'vue'
 // Charger la librairie vis-network depuis le package npm (recommandé)
 import { DataSet, Network } from "vis-network/standalone";
 
-
 onMounted(() => {
   const nodes = new DataSet([
-    { id: 1, label: "RENNES" },
+    { id: 1, label: "RENNES"},
     { id: 2, label: "CAEN" },
     { id: 3, label: "LILLE" },
     { id: 4, label: "NANTES" },
@@ -22,46 +23,47 @@ onMounted(() => {
     { id: 9, label: "LYON" },
     { id: 10, label: "GRENOBLE" },
   ]);
-
   const edges = new DataSet([
-    { from: 1, to: 2 },
-    { from: 1, to: 4 },
-    { from: 1, to: 5 },
-    { from: 1, to: 8 },
-    { from: 2, to: 1 },
-    { from: 2, to: 3 },
-    { from: 2, to: 5 },
-    { from: 3, to: 2 },
-    { from: 3, to: 5 },
-    { from: 3, to: 6 },
-    { from: 3, to: 7 },
-    { from: 4, to: 1 },
-    { from: 4, to: 5 },
-    { from: 4, to: 8 },
-    { from: 5, to: 1 },
-    { from: 5, to: 2 },
-    { from: 5, to: 3 },
-    { from: 5, to: 4 },
-    { from: 5, to: 6 },
-    { from: 6, to: 3 },
-    { from: 6, to: 5 },
-    { from: 6, to: 7 },
-    { from: 6, to: 9 },
-    { from: 6, to: 10 },
-    { from: 7, to: 6 },
-    { from: 7, to: 9 },
-    { from: 7, to: 10 },
-    { from: 8, to: 1 },
-    { from: 8, to: 4 },
-    { from: 8, to: 5 },
-    { from: 8, to: 9 },
-    { from: 9, to: 6 },
-    { from: 9, to: 7 },
-    { from: 9, to: 8 },
-    { from: 9, to: 10 },
-    { from: 10, to: 6 },
-    { from: 10, to: 7 },
-    { from: 10, to: 9 },
+    { from: 1, to: 2, label: "75" },
+    { from: 1, to: 4, label: "45" },
+    { from: 1, to: 5, label: "110" },
+    { from: 1, to: 8, label: "130" },
+    { from: 2, to: 1, label: "75" },
+    { from: 2, to: 3, label: "65" },
+    { from: 2, to: 5, label: "50" },
+    { from: 3, to: 2, label: "65" },
+    { from: 3, to: 5, label: "70" },
+    { from: 3, to: 6, label: "120" },
+    { from: 3, to: 7, label: "100" },
+    { from: 4, to: 1, label: "45" },
+    { from: 4, to: 5, label: "80" },
+    { from: 4, to: 8, label: "90" },
+    { from: 5, to: 1, label: "110" },
+    { from: 5, to: 2, label: "50" },
+    { from: 5, to: 3, label: "70" },
+    { from: 5, to: 4, label: "80" },
+    { from: 5, to: 6, label: "60" },
+    { from: 5, to: 8, label: "150" },
+    { from: 6, to: 3, label: "120" },
+    { from: 6, to: 5, label: "60" },
+    { from: 6, to: 7, label: "75" },
+    { from: 6, to: 9, label: "70" },
+    { from: 6, to: 10,label: "75" },
+    { from: 7, to: 3, label: "100" },
+    { from: 7, to: 6, label: "75" },
+    { from: 7, to: 9, label: "90" },
+    { from: 7, to: 10,label: "80" },
+    { from: 8, to: 1, label: "130" },
+    { from: 8, to: 4, label: "90" },
+    { from: 8, to: 5, label: "150" },
+    { from: 8, to: 9, label: "100" },
+    { from: 9, to: 6, label: "70" },
+    { from: 9, to: 7, label: "90" },
+    { from: 9, to: 8, label: "100" },
+    { from: 9, to: 10, label: "40" },
+    { from: 10, to: 6, label: "75" },
+    { from: 10, to: 7, label: "80" },
+    { from: 10, to: 9, label: "40" },
   ]);
 
   const container = document.getElementById("mynetwork");
@@ -73,18 +75,44 @@ onMounted(() => {
 
   const options = {
     nodes: {
-      shape: "dot",
-      size: 20,
-      font: { size: 14, color: "#000" },
+      shape: 'box',          
+      fixed: {
+        x: false,
+        y: false,
+      },
+      widthConstraint: {      
+        minimum: 70,
+        maximum: 80,
+      },
+      heightConstraint: { 
+        minimum: 30,
+        maximum : 30,
+        valign: 'middle',
+      },
+      font: {
+        size: 12,
+        color: '#fff',
+        align: 'center',
+      },
+      color: {
+        background: '#1976D2',
+        border: '#0D47A1',
+        highlight: {
+          background: '#42A5F5',
+          border: '#0D47A1',
+        },
+      },
+      borderWidth: 2,
     },
     edges: {
-      color: "#848484",
-      arrows: { to: false },
+      color: '#999',
+      font: { align: 'middle', size: 12, color: '#444' },
     },
     physics: {
       enabled: false,
     },
-  };
+  }
+
 
   const network = new Network(container, data, options);
   console.log("Network ready:", network);
