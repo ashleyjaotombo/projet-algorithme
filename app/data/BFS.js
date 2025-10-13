@@ -24,6 +24,8 @@ export function BFS(nomVilleDepart) {
     //On récupère l'index de la ville séléctionnée dans notre tableau VILLES
     const depart = VILLES.indexOf(nomVilleDepart);
 
+    if (depart == -1) return;
+
     //On initialise les tableaux etat, pere et atraiter
     const etat = [];
     const pere = [];
@@ -39,13 +41,15 @@ export function BFS(nomVilleDepart) {
     let j = 0;
 
     // On démarre avec la ville de départ
-    atraiter[j++] = depart;
+    atraiter[j] = { depart: depart, arrivee: depart, poids: 0 };
+    j += 1;
     etat[depart] = "Vu";
 
 
     // On commence la boucle principale
     while (i < j) {
-        const y = atraiter[i++];
+        const y = atraiter[i].arrivee;
+        i++;
 
         // On récupère les successeurs non vus en prenant en compte leur poids
         const successeurs = [];
@@ -63,10 +67,11 @@ export function BFS(nomVilleDepart) {
         for (const { index: z } of successeurs) {
             etat[z] = "Vu";
             pere[z] = y;
-            atraiter[j++] = z;
+            atraiter[j++] = { depart: y, arrivee: z, poids: MATRICE[y][z] };
         }
     }
 
-    const results = atraiter.map(i => VILLES[i]).join(" → ");
-    return results;
+    const results = atraiter.map(i => VILLES[i.arrivee]).join(" → ");
+
+    return { atraiter, results };
 }
