@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 import { BFS } from '~/data/BFS';
 import { DFS } from '~/data/DFS';
+import { KRUSHKAL } from '~/data/Krushkal';
 
 BFS("Caen");
 DFS("Caen");
+KRUSHKAL();
 
          // <v-list :items="items"></v-list>
 
