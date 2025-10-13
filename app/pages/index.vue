@@ -2,10 +2,12 @@
 import { BFS } from '~/data/BFS';
 import { DFS } from '~/data/DFS';
 import { KRUSHKAL } from '~/data/Krushkal';
+import { PRIM } from '~/data/Prim';
 
 BFS("Caen");
 DFS("Caen");
 KRUSHKAL();
+PRIM();
 
          // <v-list :items="items"></v-list>
 
