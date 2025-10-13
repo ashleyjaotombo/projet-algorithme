@@ -1,19 +1,23 @@
 export function DFS(nomVilleDepart) {
+    const RENNES = [0, 75, 0, 45, 110, 0, 0, 130, 0, 0];
+    const CAEN = [75, 0, 65, 0, 50, 0, 0, 0, 0, 0];
+    const LILLE = [0, 65, 0, 0, 70, 120, 100, 0, 0, 0];
+    const NANTES = [45, 0, 0, 0, 80, 0, 0, 90, 0, 0];
+    const PARIS = [110, 50, 120, 80, 0, 60, 0, 150, 0, 0];
+    const DIJON = [0, 0, 100, 0, 60, 0, 75, 0, 70, 75];
+    const NANCY = [0, 0, 0, 0, 0, 75, 0, 0, 90, 80];
+    const BORDEAUX = [130, 0, 0, 90, 150, 0, 0, 0, 100, 0];
+    const LYON = [0, 0, 0, 0, 0, 70, 90, 100, 0, 40];
+    const GRENOBLE = [0, 0, 0, 0, 0, 75, 80, 0, 40, 0];
+
+    const MATRICE = [
+        RENNES, CAEN, LILLE, NANTES, PARIS,
+        DIJON, NANCY, BORDEAUX, LYON, GRENOBLE
+    ];
+
     const VILLES = [
         "Rennes", "Caen", "Lille", "Nantes", "Paris",
         "Dijon", "Nancy", "Bordeaux", "Lyon", "Grenoble"
-    ];
-    const MATRICE = [
-        [0, 75, 0, 45, 110, 0, 0, 130, 0, 0],
-        [75, 0, 65, 0, 50, 0, 0, 0, 0, 0],
-        [0, 65, 0, 70, 120, 100, 0, 0, 0, 0],
-        [45, 0, 70, 0, 80, 0, 0, 90, 0, 0],
-        [110, 50, 120, 80, 0, 60, 0, 150, 0, 0],
-        [0, 0, 100, 0, 60, 0, 75, 0, 70, 75],
-        [0, 0, 0, 0, 0, 75, 0, 0, 90, 80],
-        [130, 0, 0, 90, 150, 0, 0, 0, 100, 0],
-        [0, 0, 0, 0, 0, 70, 90, 100, 0, 40],
-        [0, 0, 0, 0, 0, 75, 80, 0, 40, 0],
     ];
 
     const start = VILLES.indexOf(nomVilleDepart);
@@ -43,5 +47,6 @@ export function DFS(nomVilleDepart) {
     explorer(start);
 
     console.log("Ordre de visite :", ordre.map(i => VILLES[i]).join(" → "));
-    return { ordre: ordre.map(i => VILLES[i]), pere: pere.map(p => p === null ? null : VILLES[p]) };
+    const results = ordre.map(i => VILLES[i]).join(" → ");
+    return results;
 }
