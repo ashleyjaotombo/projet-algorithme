@@ -43,7 +43,11 @@ export function DFS(nomVilleDepart) {
         }
 
         // Trie les voisins par poids croissant
-        voisins.sort((a, b) => a.poids - b.poids);
+        voisins.sort((a, b) => {
+            const nomA = VILLES[a.index];
+            const nomB = VILLES[b.index];
+            return nomA.localeCompare(nomB);
+        });
 
         // Explore récursivement
         for (const { index: v, poids } of voisins) {

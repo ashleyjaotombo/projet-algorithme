@@ -9,7 +9,7 @@
         <p class="ml-2 font-weight-medium">
           Graphe de référence pour les algorithmes :
         </p>
-        <GrapheDisplay class="w-100" style="height: 600px;" />
+        <GrapheDisplay v-model="results.atraiter" class="w-100" style="height: 600px;" />
       </v-col>
 
       <v-col cols="5" class="d-flex align-center justify-center px-4">
@@ -47,16 +47,11 @@
             Appliquer
           </v-btn>
 
-          <p v-if="results !== ''" class="mt-4 font-weight-bold">Ordre de visite :</p>
+          <p v-if="results !== false" class="mt-4 font-weight-bold">Ordre de visite :</p>
           <p v-if="results" class="text-green">{{ results?.results }}</p>
-          <v-btn v-if="results" @click="refreshPage" color="red mt-10">
-            Réinitialiser le graphe
-            </v-btn>
+          
         </v-container>
       </v-col>
-    </v-row>
-    <v-row>
-        <CreateGraphe v-if="results!==''" :data="results?.atraiter"/>
     </v-row>
   </v-col>
 </template>
@@ -66,7 +61,6 @@ import { ref } from "vue";
 import { BFS } from "~/data/BFS";
 import { DFS } from "~/data/DFS";
 import GrapheDisplay from "~/components/GrapheDisplay.vue";
-import CreateGraphe from "~/components/CreateGraphe.vue";
 
 const methode = ref("");
 const items = [
@@ -82,7 +76,8 @@ const items = [
   "Grenoble",
 ];
 const ville = ref("");
-const results = ref("");
+const results = ref(false);
+
 
 function runParcours() {
   if (!ville.value || !methode.value){
@@ -92,14 +87,10 @@ function runParcours() {
 
   if (methode.value === "largeur") {
     results.value = BFS(ville.value);
+
   } else if (methode.value === "profondeur") {
     results.value = DFS(ville.value);
   }
-  console.log(results);
 }
 
-function refreshPage() {
-  window.location.reload();
-  results.value="";
-}
 </script>

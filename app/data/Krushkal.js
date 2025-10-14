@@ -71,6 +71,8 @@ export function KRUSHKAL() {
         à: VILLES[a.arrivee],
         poids: a.poids
     })));
+
+    return arbre;
 }
 
 /*

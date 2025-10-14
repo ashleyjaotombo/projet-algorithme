@@ -61,7 +61,11 @@ export function BFS(nomVilleDepart) {
         }
 
         // Trie les successeurs selon le poids croissant
-        successeurs.sort((a, b) => a.poids - b.poids);
+        successeurs.sort((a, b) => {
+            const nomA = VILLES[a.index];
+            const nomB = VILLES[b.index];
+            return nomA.localeCompare(nomB);
+        });
 
         // Enfile les voisins selon la priorité du poids
         for (const { index: z } of successeurs) {
@@ -72,6 +76,7 @@ export function BFS(nomVilleDepart) {
     }
 
     const results = atraiter.map(i => VILLES[i.arrivee]).join(" → ");
+
 
     return { atraiter, results };
 }

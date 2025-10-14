@@ -7,11 +7,16 @@
 <script setup>
 import { onMounted } from 'vue'
 
+
 // Charger la librairie vis-network depuis le package npm (recommandé)
 import { DataSet, Network } from "vis-network/standalone";
 
+const nodes = ref(null);
+const edges = ref(null);
+const network = ref(null)
+
 onMounted(() => {
-  const nodes = new DataSet([
+  nodes.value = new DataSet([
     { id: 1, label: "RENNES"},
     { id: 2, label: "CAEN" },
     { id: 3, label: "LILLE" },
@@ -23,7 +28,7 @@ onMounted(() => {
     { id: 9, label: "LYON" },
     { id: 10, label: "GRENOBLE" },
   ]);
-  const edges = new DataSet([
+  edges.value = new DataSet([
     { from: 1, to: 2, label: "75" },
     { from: 1, to: 4, label: "45" },
     { from: 1, to: 5, label: "110" },
@@ -69,8 +74,8 @@ onMounted(() => {
   const container = document.getElementById("mynetwork");
 
   const data = {
-    nodes,
-    edges,
+    nodes : nodes.value,
+    edges : edges.value,
   };
 
   const options = {
@@ -114,9 +119,40 @@ onMounted(() => {
   }
 
 
-  const network = new Network(container, data, options);
+  network.value = new Network(container, data, options);
   console.log("Network ready:", network);
 });
+
+const model = defineModel();
+
+watch(model, async (newModel) => {
+  if (!newModel) return;
+
+  console.log({ newModel });
+
+  // 1️⃣ Réinitialiser toutes les arêtes en gris
+  for (const edge of edges.value.get()) {
+    edges.value.update({ id: edge.id, color: "#999", width: 1 });
+  }
+
+  // 2️⃣ Colorier progressivement les arêtes du modèle
+  for (const edge of edges.value.get()) {
+    const found = newModel.some(
+      (p) =>
+        Number(p.depart + 1) === Number(edge.from) &&
+        Number(p.arrivee + 1) === Number(edge.to)
+    );
+
+    if (found) {
+      // ⏳ pause avant coloration
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // 🎨 coloration
+      edges.value.update({ id: edge.id, color: "#4CAF50", width: 3 });
+    }
+  }
+});
+
 </script>
 
 <style scoped>
