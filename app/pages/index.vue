@@ -7,7 +7,7 @@ import { PRIM } from '~/data/Prim';
 BFS("Caen");
 DFS("Caen");
 KRUSHKAL();
-PRIM();
+PRIM("Paris"); //choisir la ville départ
 
          // <v-list :items="items"></v-list>
 

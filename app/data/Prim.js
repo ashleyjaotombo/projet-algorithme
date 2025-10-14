@@ -1,4 +1,4 @@
-export function PRIM() {
+export function PRIM(villeDepart) {
     const VILLES = [
         "Rennes", "Caen", "Lille", "Nantes", "Paris",
         "Dijon", "Nancy", "Bordeaux", "Lyon", "Grenoble"
@@ -17,9 +17,12 @@ export function PRIM() {
         [0, 0, 0, 0, 0, 75, 80, 0, 40, 0],
     ];
 
+    const start = VILLES.indexOf(villeDepart);
+    if (start === -1) { console.error("Ville inconnue:", villeDepart); return; }
+
     const arbre = [];
     const visite = Array(VILLES.length).fill(false);
-    visite[0] = true; // départ à Rennes
+    visite[start] = true; // départ à Rennes
 
     while (arbre.length < VILLES.length - 1) {
         let minPoids = Infinity;
