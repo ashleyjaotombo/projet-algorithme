@@ -11,19 +11,19 @@ DFS("Caen");
 const items = [
     {
       title: 'Algorithme de parcours',
-      value: 1,
+      value: "parcours",
     },
     {
       title: 'Arbre couvrant de poids minimum',
-      value: 2,
+      value: "arbre-couvrant",
     },
     {
       title: 'Recherche du chemin optimal (Dijkstra)',
-      value: 3,
+      value: "chemin-optimal-dijkstra",
     },
     {
       title: 'Recherche du chemin optimal (Bellman-Ford, Floyd-Warshall)',
-      value: 4,
+      value: "chemin-optimal-bellman",
     },
   ]
 </script>
@@ -48,7 +48,7 @@ const items = [
               <NuxtLink :to="`/${item.value}/`"  class="text-decoration-none text-black">
                 <v-list-item-title><v-icon size="small" color="primary">mdi-chevron-right</v-icon>{{item.title}}</v-list-item-title>
               </NuxtLink>
-            </v-list-item>
+            </v-list-item> 
           
           </v-list>
         </v-card>
