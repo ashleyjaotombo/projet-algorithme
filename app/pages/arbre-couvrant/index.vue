@@ -1,65 +1,55 @@
 <template>
-  <v-container class="py-10">
-    <!-- 🏷️ Titre principal -->
-    <v-row justify="center" class="mb-8">
-      <v-col cols="12" md="8" class="text-center">
-        <h1 class="text-h4 font-weight-bold text-primary mb-2">
-          Algorithme de l'arbre couvrant minimal — KRUSKAL
-        </h1>
-        <p class="text-subtitle-2 text-medium-emphasis">
-          Visualisation interactive du graphe et des étapes de construction de l’arbre couvrant.
+  <v-col class="w-100 ma-0" cols="12">
+    <p class="text-button text-green text-center font-weight-bold mb-4">
+      Algorithme de l'arbre couvrant minimal — KRUSKAL
+    </p>
+
+    <v-row>
+      <v-col cols="7">
+        <p class="ml-2 font-weight-medium">
+          Graphe de référence pour les algorithmes :
         </p>
+        <GrapheDisplay v-model="resultat" class="w-100" style="height: 600px;" />
       </v-col>
-    </v-row>
 
-    <!-- 🕸️ Graphe principal -->
-    <v-row justify="center">
-      <v-col cols="12" md="10" lg="8">
-        <v-card class="pa-4 elevation-3 rounded-xl">
-          <GrapheDisplay v-model="resultat" style="height: 600px;" />
-        </v-card>
-      </v-col>
-    </v-row>
+      <v-col cols="5" class="d-flex align-center justify-center px-4">
+        <v-container>
+          <p class="text-caption mb-6 text-red">
+            Vous pouvez changer l'organisation du graphe manuellement en glissant les sommets.
+            Vous pouvez également actualiser la page pour forcer la restructuration.
+          </p>
 
-    <!-- ⚙️ Bouton d’action -->
-    <v-row justify="center" class="mt-6">
-      <v-col cols="auto">
-        <v-btn
-          color="primary"
-          class="px-6 py-3 text-white text-subtitle-1"
-          prepend-icon="mdi-play-circle"
-          @click="runAlgo"
-        >
-          Lancer l’algorithme de Kruskal
-        </v-btn>
-      </v-col>
-    </v-row>
+          
 
-    <!-- 📊 Résultats -->
-    <v-row justify="center" class="mt-6" v-if="resultat && resultat.length">
-      <v-col cols="12" md="8">
-        <v-card class="pa-4 rounded-xl elevation-1">
-          <h2 class="text-h6 font-weight-medium text-primary mb-3">
-            Résultat de l’arbre couvrant :
-          </h2>
-          <v-list density="compact">
+          <v-btn
+            v-if="ville !== ''"
+            class="ml-4"
+            variant="elevated"
+            color="primary"
+            @click="runAlgo"
+          >
+            Lancer l'algorithme de Kruskal
+          </v-btn>
+
+          <v-container v-if="submit">
+            <p v-if="submit">Résultat de l'arbre couvrant : </p>
+          <v-list density="compact" class="bg-teal-lighten-4 rounded-xl">
             <v-list-item
               v-for="(edge, index) in resultat"
               :key="index"
-              prepend-icon="mdi-link-variant"
             >
               <v-list-item-title>
                 {{ villes[edge.depart] }} → {{ villes[edge.arrivee] }}
-                <span class="text-caption text-medium-emphasis">
-                  ({{ edge.poids }} km)
-                </span>
+                ({{ edge.poids }} km)
               </v-list-item-title>
             </v-list-item>
           </v-list>
-        </v-card>
+          </v-container>
+          
+        </v-container>
       </v-col>
     </v-row>
-  </v-container>
+  </v-col>
 </template>
 
 <script setup>
@@ -83,10 +73,12 @@ const villes = [
 
 // Résultat du graphe (v-model de GrapheDisplay)
 const resultat = ref([]);
+const submit = ref(false);
 
 // Fonction déclenchant l'algo
 function runAlgo() {
   resultat.value = KRUSHKAL();
+  submit.value = true;
 }
 </script>
 

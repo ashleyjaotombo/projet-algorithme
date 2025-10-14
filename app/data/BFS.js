@@ -1,13 +1,16 @@
-const RENNES = [0, 75, 0, 45, 110, 0, 0, 130, 0, 0];
-const CAEN = [75, 0, 65, 0, 50, 0, 0, 0, 0, 0];
-const LILLE = [0, 65, 0, 0, 70, 120, 100, 0, 0, 0];
-const NANTES = [45, 0, 0, 0, 80, 0, 0, 90, 0, 0];
-const PARIS = [110, 50, 70, 80, 0, 60, 0, 150, 0, 0];
-const DIJON = [0, 0, 120, 0, 60, 0, 75, 0, 70, 75];
-const NANCY = [0, 0, 100, 0, 0, 75, 0, 0, 90, 80];
-const BORDEAUX = [130, 0, 0, 90, 150, 0, 0, 0, 100, 0];
-const LYON = [0, 0, 0, 0, 0, 70, 90, 100, 0, 40];
-const GRENOBLE = [0, 0, 0, 0, 0, 75, 80, 0, 40, 0];
+const RENNES = [0, 2, 0, 8, 9, 0, 0, 1, 0, 0];
+const CAEN = [10, 0, 5, 0, 9, 0, 0, 0, 0, 0];
+const LILLE = [0, 2, 0, 0, 9, 3, 7, 0, 0, 0];
+const NANTES = [10, 0, 0, 0, 9, 0, 0, 1, 0, 0];//
+const PARIS = [10, 2, 5, 8, 0, 3, 0, 1, 0, 0];
+const DIJON = [0, 0, 5, 0, 9, 0, 7, 0, 6, 4];
+const NANCY = [0, 0, 5, 0, 0, 3, 0, 0, 6, 4];
+const BORDEAUX = [10, 0, 0, 8, 9, 0, 0, 0, 6, 0];
+const LYON = [0, 0, 0, 0, 0, 3, 7, 1, 0, 4];
+const GRENOBLE = [0, 0, 0, 0, 0, 3, 7, 0, 6, 0];
+
+//Les coefficients du dessus correspondents à cet ordre alphabétique pour le parcours
+//Bordeaux : 1, Caen : 2, Dijon : 3, Grenoble : 4, Lille : 5, Lyon : 6, Nancy : 7, Nantes : 8, Paris : 9, Rennes : 10
 
 const MATRICE = [
     RENNES, CAEN, LILLE, NANTES, PARIS,
@@ -71,7 +74,8 @@ export function BFS(nomVilleDepart) {
         for (const { index: z } of successeurs) {
             etat[z] = "Vu";
             pere[z] = y;
-            atraiter[j++] = { depart: y, arrivee: z, poids: MATRICE[y][z] };
+            atraiter[j++] = { depart: y, arrivee: z, poids: MATRICE[y][z], départs: VILLES[y], arrivees: VILLES[z] };
+            console.log("Atraiter : ", atraiter[j - 1]);
         }
     }
 

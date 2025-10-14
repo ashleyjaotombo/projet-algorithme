@@ -136,21 +136,28 @@ watch(model, async (newModel) => {
   }
 
   // 2️⃣ Colorier progressivement les arêtes du modèle
-  for (const edge of edges.value.get()) {
-    const found = newModel.some(
-      (p) =>
-        Number(p.depart + 1) === Number(edge.from) &&
-        Number(p.arrivee + 1) === Number(edge.to)
+  for (const path of newModel) {
+  // Cherche dans le graphe l’arête correspondante
+  const edge = edges.value
+    .get()
+    .find(
+      (e) =>
+        Number(e.from) === Number(path.depart + 1) &&
+        Number(e.to) === Number(path.arrivee + 1)
     );
 
-    if (found) {
-      // ⏳ pause avant coloration
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+  if (edge) {
+    // ⏳ pause avant coloration
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      // 🎨 coloration
-      edges.value.update({ id: edge.id, color: "#4CAF50", width: 3 });
-    }
+    // 🎨 colorie l’arête trouvée
+    edges.value.update({ id: edge.id, color: "#4CAF50", width: 3 });
+
+    console.log(
+      `Coloré : ${path.depart + 1} → ${path.arrivee + 1} (${path.ordre})`
+    );
   }
+}
 });
 
 </script>
