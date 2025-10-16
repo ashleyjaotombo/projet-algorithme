@@ -6,6 +6,7 @@
 
     <v-row>
       <v-col cols="7">
+        <RetourButton />
         <p class="ml-2 font-weight-medium">
           Graphe de référence pour les algorithmes :
         </p>
@@ -61,6 +62,8 @@ import { ref } from "vue";
 import { BFS } from "~/data/BFS";
 import { DFS } from "~/data/DFS";
 import GrapheDisplay from "~/components/GrapheDisplay.vue";
+import RetourButton from "@/components/RetourButton.vue";
+
 
 const methode = ref("");
 const items = [
