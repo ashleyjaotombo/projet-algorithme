@@ -6,6 +6,8 @@
 
     <v-row>
       <v-col cols="7">
+        <RetourButton/>
+        
         <p class="ml-2 font-weight-medium">
           Graphe de référence pour les algorithmes :
         </p>
@@ -77,6 +79,7 @@
 <script setup>
 import { ref } from "vue";
 import GrapheDisplay from "@/components/GrapheDisplay.vue";
+import RetourButton from "@/components/RetourButton.vue";
 import { KRUSHKAL } from "~/data/Krushkal";
 import { PRIM } from "~/data/Prim";
 
@@ -110,11 +113,15 @@ const reload = ref(false);
 function runAlgoKrushkal() {
   resultat.value = KRUSHKAL();
   submit.value = true;
+  reload.value=false;
   colorKrushkal.value = "teal-lighten-2"
   colorPrim.value = "teal-darken-3"
   active.value = false;
   choix.value="Krushkal";
-  reload.value = true;
+  setTimeout(()=>{
+    reload.value = true;
+  }, 1000)
+  
 }
 
 // Fonction déclenchant l'algo de Prim
