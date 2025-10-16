@@ -23,16 +23,38 @@
 
           <v-btn
             v-if="ville !== ''"
-            class="ml-4"
+            class="ma-4"
             variant="elevated"
-            color="primary"
-            @click="runAlgo"
+            :color="colorKrushkal"
+            width="300"
+            @click="runAlgoKrushkal"
           >
             Lancer l'algorithme de Kruskal
           </v-btn>
+          <v-btn
+            class="ma-4"
+            variant="elevated"
+            :color="colorPrim"
+            width="300"
+            @click="active = true; choix = 'Prim'; reload = false"
+          >
+            Lancer l'algorithme de Prim
+          </v-btn>
 
-          <v-container v-if="submit">
-            <p v-if="submit">Résultat de l'arbre couvrant : </p>
+          <v-select
+            v-if="active"
+            v-model="ville"
+            :items="villes"
+            label="Choisir une ville de départ"
+            density="compact"
+          />
+
+          <v-btn v-if="ville && choix === 'Prim'" class="ml-6" color="red-darken-2" @click="runAlgoPrim">
+            Lancer PRIM
+          </v-btn>
+
+          <v-container v-if="submit && reload">
+            <p v-if="submit">Résultat de l'arbre couvrant : ({{ choix }})</p>
           <v-list density="compact" class="bg-teal-lighten-4 rounded-xl">
             <v-list-item
               v-for="(edge, index) in resultat"
@@ -56,6 +78,9 @@
 import { ref } from "vue";
 import GrapheDisplay from "@/components/GrapheDisplay.vue";
 import { KRUSHKAL } from "~/data/Krushkal";
+import { PRIM } from "~/data/Prim";
+
+const choix = ref(null);
 
 // Ton tableau des villes pour l'affichage lisible
 const villes = [
@@ -70,15 +95,35 @@ const villes = [
   "Lyon",
   "Grenoble",
 ];
+const ville = ref(null); //pour récupérer la ville choisie
 
-// Résultat du graphe (v-model de GrapheDisplay)
+const active = ref(false);
+
+// Résultat du graphe (resultat est le v-model de GrapheDisplay)
 const resultat = ref([]);
 const submit = ref(false);
+const colorKrushkal = ref("teal-darken-3")
+const colorPrim = ref("teal-darken-3");
+const reload = ref(false);
 
-// Fonction déclenchant l'algo
-function runAlgo() {
+// Fonction déclenchant l'algo de Krushkal
+function runAlgoKrushkal() {
   resultat.value = KRUSHKAL();
   submit.value = true;
+  colorKrushkal.value = "teal-lighten-2"
+  colorPrim.value = "teal-darken-3"
+  active.value = false;
+  choix.value="Krushkal";
+  reload.value = true;
+}
+
+// Fonction déclenchant l'algo de Prim
+function runAlgoPrim() {
+  resultat.value = PRIM(ville.value);
+  submit.value = true;
+  colorPrim.value = "teal-lighten-2"
+  colorKrushkal.value = "teal-darken-3"
+  reload.value = true;
 }
 </script>
 
