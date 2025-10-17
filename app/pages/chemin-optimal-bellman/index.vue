@@ -1,7 +1,7 @@
 <template>
   <v-col class="w-100 ma-0" cols="12">
     <p class="text-button text-green text-center font-weight-bold mb-4">
-      Algorithme de chemin minimal — BELLMAN FORD
+      Algorithme de chemin le plus court
     </p>
 
     <v-row>
@@ -36,7 +36,18 @@
             width="300"
             @click="runBELLMANFORD"
           >
-            Lancer l'algorithme de Bellman Ford
+            Algorithme de Bellman Ford
+          </v-btn>
+
+          <v-btn
+            v-if="ville"
+            class="ma-4"
+            variant="elevated"
+            color="teal-darken-3"
+            width="300"
+            @click="runFLOYD"
+          >
+            Algorithme de Floyd Warshall
           </v-btn>
         
 
@@ -72,6 +83,7 @@ import { ref } from "vue";
 import GrapheDisplay from "@/components/GrapheDisplay.vue";
 import RetourButton from "@/components/RetourButton.vue";
 import { BELLMANFORD } from "~/data/Bellman-Ford.js";
+import { FLOYD_WARSHALL } from "~/data/Floyd-warshall";
 
 const choix = ref(null);
 
@@ -95,12 +107,20 @@ const ville = ref(null); //pour récupérer la ville choisie
 const resultat = ref([]);
 const submit = ref(false);
 const res = ref(null);
+const res2 = ref(null);
 
 // Fonction déclenchant l'algo de Krushkal
 function runBELLMANFORD(){
     choix.value = "Bellman-Ford"
     res.value = BELLMANFORD(ville.value);
     submit.value=true;
+}
+
+function runFLOYD(){
+    choix.value = "Bellman-Ford"
+    res2.value = FLOYD_WARSHALL(ville.value);
+    submit.value=true;
+    console.log(res2)
 }
 
 </script>
