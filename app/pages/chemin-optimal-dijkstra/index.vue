@@ -81,7 +81,7 @@
                     size="small"
                     @click="voirChemin(villes[index])"
                   >
-                    Voir chemin
+                    Colorier chemin
                   </v-btn>
                 </v-col>
               </v-row>

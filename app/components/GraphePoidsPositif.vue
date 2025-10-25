@@ -67,7 +67,6 @@ onMounted(() => {
       },
       heightConstraint: { 
         minimum: 30,
-        maximum : 30,
         valign: 'middle',
       },
       font: {
