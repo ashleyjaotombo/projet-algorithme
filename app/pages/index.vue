@@ -1,12 +1,4 @@
 <script lang="ts" setup>
-import { BFS } from '~/algorithmes/BFS';
-import { DFS } from '~/algorithmes/DFS';
-
-BFS("Caen");
-DFS("Caen");
-
-
-
 
 const items = [
     {

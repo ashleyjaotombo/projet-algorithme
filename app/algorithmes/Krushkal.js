@@ -62,13 +62,6 @@ export function KRUSHKAL() {
         }
     }
 
-    console.log("Arbre couvrant minimal :");
-    console.table(arbre.map(a => ({
-        de: VILLES[a.depart],
-        à: VILLES[a.arrivee],
-        poids: a.poids
-    })));
-
     return arbre;
 }
 

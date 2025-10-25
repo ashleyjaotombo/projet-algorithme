@@ -77,7 +77,6 @@ onMounted(() => {
       },
       heightConstraint: { 
         minimum: 30,
-        maximum : 30,
         valign: 'middle',
       },
       font: {
@@ -110,7 +109,6 @@ onMounted(() => {
 
 
   network.value = new Network(container, data, options);
-  console.log("Network ready:", network);
 });
 
 const model = defineModel();
@@ -118,7 +116,6 @@ const model = defineModel();
 watch(model, async (newModel) => {
   if (!newModel) return;
 
-  console.log({ newModel });
 
   for (const edge of edges.value.get()) {
     edges.value.update({ id: edge.id, color: "#999", width: 1 });
@@ -140,9 +137,6 @@ watch(model, async (newModel) => {
     // colorie l’arête trouvée
     edges.value.update({ id: edge.id, color: "#4CAF50", width: 3 });
 
-    console.log(
-      `Coloré : ${path.depart + 1} → ${path.arrivee + 1} (${path.ordre})`
-    );
   }
 }
 });

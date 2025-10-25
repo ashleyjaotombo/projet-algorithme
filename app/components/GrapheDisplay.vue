@@ -90,7 +90,6 @@ onMounted(() => {
       },
       heightConstraint: { 
         minimum: 30,
-        maximum : 30,
         valign: 'middle',
       },
       font: {
@@ -119,7 +118,6 @@ onMounted(() => {
 
 
   network.value = new Network(container, data, options);
-  console.log("Network ready:", network);
 });
 
 const model = defineModel();
