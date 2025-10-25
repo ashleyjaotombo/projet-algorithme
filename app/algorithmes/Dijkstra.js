@@ -9,7 +9,7 @@ export function DIJKSTRA(nomVilleDepart, matrice) {
     const depart = VILLES.indexOf(nomVilleDepart);
     if (depart === -1) {
         console.error("Ville inconnue :", nomVilleDepart);
-        return;
+        return null;;
     }
 
     const distances = Array(VILLES.length).fill(Infinity);
@@ -18,7 +18,7 @@ export function DIJKSTRA(nomVilleDepart, matrice) {
 
     distances[depart] = 0;
 
-    // --- Algorithme principal ---
+    // Algorithme principal
     for (let i = 0; i < VILLES.length - 1; i++) {
 
         // Trouver la ville non visitée avec la plus petite distance
@@ -46,5 +46,36 @@ export function DIJKSTRA(nomVilleDepart, matrice) {
         }
     }
 
-    return distances;
+    //  Fonction facultative pour reconstruire le chemin
+    function getChemin(villeArrivee) {
+    const indexArrivee = VILLES.indexOf(villeArrivee);
+    if (indexArrivee === -1) {
+      console.error("Ville inconnue :", villeArrivee);
+      return [];
+    }
+
+    const chemin = [];
+    let current = indexArrivee;
+
+    while (current !== null) {
+      const to = current;
+      const from = precedent[current];
+      if (to !== null && from !== null) {
+        chemin.unshift({
+          depart: from,
+          arrivee: to,
+          poids: matrice[from][to],
+        });
+      }
+      current = from;
+    }
+
+    if (chemin.length === 0) return [];
+    return chemin;
+  }
+
+    return {
+    distances,
+    getChemin,
+  };
 }

@@ -1,7 +1,7 @@
 <template>
  <v-col class="w-100 ma-0" cols="12">
    <p class="text-button text-green text-center font-weight-bold mb-4">
-     Algorithme de chemin le plus court
+     Algorithme de chemin le plus court (Dijkstra)
    </p>
 
 
@@ -12,9 +12,9 @@
        <p class="ml-2 font-weight-medium">
          Graphe de référence pour les algorithmes :
        </p>
-       <GrapheDisplay v-if="graphe==='énnoncé'" class="w-100" style="height: 600px;"/>
-       <GraphePoidsPositif v-else-if="graphe==='orienté'" class="w-100" style="height: 600px;" />
-       <GraphePoidsNegatif v-else class="w-100" style="height: 600px;" />
+       <GrapheDisplay v-if="graphe==='énnoncé'" v-model="chemin" class="w-100" style="height: 600px;"/>
+       <GraphePoidsPositif v-else-if="graphe==='orienté'" v-model="chemin" class="w-100" style="height: 600px;" />
+       <GraphePoidsNegatif v-else v-model="chemin" class="w-100" style="height: 600px;" />
      </v-col>
 
 
@@ -35,6 +35,7 @@
 
 
          <v-switch
+            v-if="ville"
             v-model="graphe"
             :label="`Utiliser le graphe du projet (si non : un graphe orienté par défaut) : ${graphe === 'énnoncé' ? 'Oui' : 'Non'}`"
             false-value="orienté"
@@ -43,16 +44,7 @@
             inset
           ></v-switch>
 
-
-         <v-switch
-            v-if="graphe!=='énnoncé'"
-            v-model="graphe"
-            :label="`Ajout de poids négatifs: ${graphe === 'orienté' ? 'Non' : 'Oui'}`"
-            false-value="orienté"
-            true-value="orienté-négatif"
-            hide-details
-            inset
-          ></v-switch>
+          <p v-if="ville" class="text-red">L'ajout de poids négatif n'est pas supporté pour l'algorithme de Dijkstra</p>
 
          <v-btn
            v-if="ville"
@@ -70,18 +62,29 @@
            <p>Résultat de l'algorithme : </p>
            <v-list density="compact" class="bg-teal-lighten-4 rounded-xl">
            <v-list-item
-             v-for="(value, index) in res"
+             v-for="(value, index) in distances"
              :key="index"
            >
-             <v-list-item-title>
-               {{ ville }} → {{ villes[index] }} :
-               <span v-if="value!==Infinity">
-                  {{ value }} km
-                </span> 
-                <span v-else>
-                  Pas de chemin
-                </span>
-             </v-list-item-title>
+             <v-row>
+                <v-col>
+                  {{ ville }} → {{ villes[index] }} : 
+                  <span v-if="value!==Infinity">
+                    {{ value }} km
+                  </span> 
+                  <span v-else>
+                    Pas de chemin
+                  </span>
+                </v-col>
+                <v-col>
+                  <v-btn
+                    v-if="value!==Infinity"
+                    size="small"
+                    @click="voirChemin(villes[index])"
+                  >
+                    Voir chemin
+                  </v-btn>
+                </v-col>
+              </v-row>
            </v-list-item>
          </v-list>
          </v-container>
@@ -97,7 +100,7 @@ import { ref } from "vue";
 import GrapheDisplay from "@/components/GrapheDisplay.vue";
 import GraphePoidsNegatif from "@/components/GraphePoidsNegatif.vue";
 import RetourButton from "@/components/RetourButton.vue";
-import { DIJKSTRA } from "~/data/Dijkstra.js";
+import { DIJKSTRA } from "~/algorithmes/Dijkstra.js";
 import GraphePoidsPositif from "~/components/GraphePoidsPositif.vue";
 
 
@@ -125,27 +128,33 @@ const ville = ref(null); //pour récupérer la ville choisie
 // Résultat du graphe (resultat est le v-model de GrapheDisplay)
 const submit = ref(false);
 const res = ref(null);
-const poidsNegatif = ref("Non");
 const graphe = ref("énnoncé");
 const matrice=ref();
+const chemin = ref(null);
+const distances = ref(null);
 
 // Fonction déclenchant les algo
 function run() {
   submit.value = false;
   if (graphe.value === "énnoncé") {
     matrice.value = matrice_ennonce;
-  } else if (graphe.value === "orienté") {
-    matrice.value = matrice_orientee;
   } else {
-    matrice.value = matrice_orientee_negatif;
+    matrice.value = matrice_orientee;
   }
   res.value = DIJKSTRA(ville.value, matrice.value);
+  distances.value = res.value.distances;
   setTimeout(()=>{
     submit.value = true;
   }, 100)
 }
 
 
+function voirChemin(villeArrivee) {
+  if (!res.value) return;
+
+  chemin.value = res.value.getChemin(villeArrivee);
+
+}
 
 const matrice_orientee = [
   [ 0,  75,  0,  45, 110,  0,  0,  0,  0,  0], 
@@ -161,18 +170,6 @@ const matrice_orientee = [
 ];
 
 
-const matrice_orientee_negatif = [
-  [ 0,  75,  0,  45, -110,  0,  0,  0,  0,  0], 
-  [ 0,   0, 65,   0,  -50,  0,  0,  0,  0,  0],
-  [ 0,   0,  0,   0,   0, 120, 100,  0,  0,  0], 
-  [ 0,   0,  0,   0,  80,  0,  0,  90,  0,  0], 
-  [ 0,   0,  0,   0,   0,  60,  0, -150,  0,  0], 
-  [ 0,   0,  0,   0,   0,   0,  75,  0,  70,  0], 
-  [ 0,   0,  0,   0,   0,   0,   0,  0,  90,  0],
-  [ 0,   0,  0,   0,   0,   0,   0,  0, 100,  0], 
-  [ 0,   0,  0,   0,   0,   0,   0,  0,   0,  -40],
-  [ 0,   0,  0,   0,   0,  -75,   0,  0,   0,   0], 
-];
 
 
 const matrice_ennonce = [

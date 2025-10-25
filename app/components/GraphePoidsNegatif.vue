@@ -51,7 +51,7 @@ onMounted(() => {
 
   { from: 8, to: 9, label: "100" },
 
-  { from: 9, to: 10, label: "-40" },
+  { from: 9, to: 10, label: "40" },
 
   { from: 10, to: 6, label: "-75" },
 ]);
@@ -99,9 +99,9 @@ onMounted(() => {
     color: '#999',
         font: { align: 'middle', size: 12, color: '#444' },
         arrows: {
-            to: { enabled: true, scaleFactor: 0.8 }, // ✅ flèches activées ici
+            to: { enabled: true, scaleFactor: 0.8 },
         },
-        smooth: { type: "curvedCW", roundness: 0.1 }, // (optionnel) courbes plus lisibles
+        smooth: { type: "curvedCW", roundness: 0.1 },
     },
     physics: {
       enabled: false,

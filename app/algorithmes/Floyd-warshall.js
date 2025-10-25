@@ -1,24 +1,12 @@
-export function FLOYD_WARSHALL() {
+export function FLOYD_WARSHALL(matrice) {
 
     const VILLES = [
         "Rennes", "Caen", "Lille", "Nantes", "Paris",
         "Dijon", "Nancy", "Bordeaux", "Lyon", "Grenoble"
     ];
 
-    const MATRICE = [
-        [0, 75, 0, 45, 110, 0, 0, 130, 0, 0],
-        [75, 0, 65, 0, 50, 0, 0, 0, 0, 0],
-        [0, 65, 0, 0, 70, 120, 100, 0, 0, 0],
-        [45, 0, 0, 0, 80, 0, 0, 90, 0, 0],
-        [110, 50, 70, 80, 0, 60, 0, 150, 0, 0],
-        [0, 0, 120, 0, 60, 0, 75, 0, 70, 75],
-        [0, 0, 100, 0, 0, 75, 0, 0, 90, 80],
-        [130, 0, 0, 90, 150, 0, 0, 0, 100, 0],
-        [0, 0, 0, 0, 0, 70, 90, 100, 0, 40],
-        [0, 0, 0, 0, 0, 75, 80, 0, 40, 0],
-    ];
 
-    const n = MATRICE.length;
+    const n = matrice.length;
     const dist = [];
 
     // Initialisation
@@ -27,10 +15,10 @@ export function FLOYD_WARSHALL() {
         for (let j = 0; j < n; j++) {
             if (i === j) {
                 dist[i][j] = 0;
-            } else if (MATRICE[i][j] === 0) {
+            } else if (matrice[i][j] === 0) {
                 dist[i][j] = Infinity;
             } else {
-                dist[i][j] = MATRICE[i][j];
+                dist[i][j] = matrice[i][j];
             }
         }
     }

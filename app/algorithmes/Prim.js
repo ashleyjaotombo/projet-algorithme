@@ -51,12 +51,6 @@ export function PRIM(nomVilleDepart) {
         }
     }
 
-    console.log("Arbre couvrant minimal (Prim) :");
-    console.table(arbre.map(a => ({
-        de: VILLES[a.depart],
-        à: VILLES[a.arrivee],
-        poids: a.poids
-    })));
 
     return arbre;
 }

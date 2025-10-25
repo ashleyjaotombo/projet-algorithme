@@ -89,9 +89,9 @@ onMounted(() => {
     color: '#999',
         font: { align: 'middle', size: 12, color: '#444' },
         arrows: {
-            to: { enabled: true, scaleFactor: 0.8 }, // ✅ flèches activées ici
+            to: { enabled: true, scaleFactor: 0.8 }, 
         },
-        smooth: { type: "curvedCW", roundness: 0.1 }, // (optionnel) courbes plus lisibles
+        smooth: { type: "curvedCW", roundness: 0.1 },
     },
     physics: {
       enabled: false,

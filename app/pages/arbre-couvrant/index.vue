@@ -80,8 +80,8 @@
 import { ref } from "vue";
 import GrapheDisplay from "@/components/GrapheDisplay.vue";
 import RetourButton from "@/components/RetourButton.vue";
-import { KRUSHKAL } from "~/data/Krushkal";
-import { PRIM } from "~/data/Prim";
+import { KRUSHKAL } from "~/algorithmes/Krushkal";
+import { PRIM } from "~/algorithmes/Prim";
 
 const choix = ref(null);
 
