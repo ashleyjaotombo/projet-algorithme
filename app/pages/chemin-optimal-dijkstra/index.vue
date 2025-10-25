@@ -12,7 +12,9 @@
        <p class="ml-2 font-weight-medium">
          Graphe de référence pour les algorithmes :
        </p>
-       <GrapheDisplay v-model="resultat" class="w-100" style="height: 600px;" />
+       <GrapheDisplay v-if="graphe==='énnoncé'" class="w-100" style="height: 600px;"/>
+       <GraphePoidsPositif v-else-if="graphe==='orienté'" class="w-100" style="height: 600px;" />
+       <GraphePoidsNegatif v-else class="w-100" style="height: 600px;" />
      </v-col>
 
 
@@ -33,10 +35,21 @@
 
 
          <v-switch
-            v-model="poidsNegatif"
-            :label="`Ajout de poids négatifs: ${poidsNegatif}`"
-            false-value="Non"
-            true-value="Oui"
+            v-model="graphe"
+            :label="`Utiliser le graphe du projet (si non : un graphe orienté par défaut) : ${graphe === 'énnoncé' ? 'Oui' : 'Non'}`"
+            false-value="orienté"
+            true-value="énnoncé"
+            hide-details
+            inset
+          ></v-switch>
+
+
+         <v-switch
+            v-if="graphe!=='énnoncé'"
+            v-model="graphe"
+            :label="`Ajout de poids négatifs: ${graphe === 'orienté' ? 'Non' : 'Oui'}`"
+            false-value="orienté"
+            true-value="orienté-négatif"
             hide-details
             inset
           ></v-switch>
@@ -61,8 +74,13 @@
              :key="index"
            >
              <v-list-item-title>
-               {{ ville }} → {{ villes[index] }}
-               ({{ value }} km)
+               {{ ville }} → {{ villes[index] }} :
+               <span v-if="value!==Infinity">
+                  {{ value }} km
+                </span> 
+                <span v-else>
+                  Pas de chemin
+                </span>
              </v-list-item-title>
            </v-list-item>
          </v-list>
@@ -77,8 +95,10 @@
 <script setup>
 import { ref } from "vue";
 import GrapheDisplay from "@/components/GrapheDisplay.vue";
+import GraphePoidsNegatif from "@/components/GraphePoidsNegatif.vue";
 import RetourButton from "@/components/RetourButton.vue";
 import { DIJKSTRA } from "~/data/Dijkstra.js";
+import GraphePoidsPositif from "~/components/GraphePoidsPositif.vue";
 
 
 const choix = ref(null);
@@ -103,17 +123,70 @@ const ville = ref(null); //pour récupérer la ville choisie
 
 
 // Résultat du graphe (resultat est le v-model de GrapheDisplay)
-const resultat = ref([]);
 const submit = ref(false);
 const res = ref(null);
 const poidsNegatif = ref("Non");
+const graphe = ref("énnoncé");
+const matrice=ref();
 
 // Fonction déclenchant les algo
-function run(){
-   res.value = DIJKSTRA(ville.value);
-   submit.value=true;
+function run() {
+  submit.value = false;
+  if (graphe.value === "énnoncé") {
+    matrice.value = matrice_ennonce;
+  } else if (graphe.value === "orienté") {
+    matrice.value = matrice_orientee;
+  } else {
+    matrice.value = matrice_orientee_negatif;
+  }
+  res.value = DIJKSTRA(ville.value, matrice.value);
+  setTimeout(()=>{
+    submit.value = true;
+  }, 1000)
 }
 
+
+
+const matrice_orientee = [
+  [ 0,  75,  0,  45, 110,  0,  0,  0,  0,  0], 
+  [ 0,   0, 65,   0,  50,  0,  0,  0,  0,  0],
+  [ 0,   0,  0,   0,   0, 120, 100,  0,  0,  0], 
+  [ 0,   0,  0,   0,  80,  0,  0,  90,  0,  0], 
+  [ 0,   0,  0,   0,   0,  60,  0, 150,  0,  0], 
+  [ 0,   0,  0,   0,   0,   0,  75,  0,  70,  0], 
+  [ 0,   0,  0,   0,   0,   0,   0,  0,  90,  0],
+  [ 0,   0,  0,   0,   0,   0,   0,  0, 100,  0], 
+  [ 0,   0,  0,   0,   0,   0,   0,  0,   0,  40],
+  [ 0,   0,  0,   0,   0,  75,   0,  0,   0,   0], 
+];
+
+
+const matrice_orientee_negatif = [
+  [ 0,  75,  0,  45, -110,  0,  0,  0,  0,  0], 
+  [ 0,   0, 65,   0,  -50,  0,  0,  0,  0,  0],
+  [ 0,   0,  0,   0,   0, 120, 100,  0,  0,  0], 
+  [ 0,   0,  0,   0,  80,  0,  0,  90,  0,  0], 
+  [ 0,   0,  0,   0,   0,  60,  0, -150,  0,  0], 
+  [ 0,   0,  0,   0,   0,   0,  75,  0,  70,  0], 
+  [ 0,   0,  0,   0,   0,   0,   0,  0,  90,  0],
+  [ 0,   0,  0,   0,   0,   0,   0,  0, 100,  0], 
+  [ 0,   0,  0,   0,   0,   0,   0,  0,   0,  -40],
+  [ 0,   0,  0,   0,   0,  -75,   0,  0,   0,   0], 
+];
+
+
+const matrice_ennonce = [
+  [0, 75, 0, 45, 110, 0, 0, 130, 0, 0],
+  [75, 0, 65, 0, 50, 0, 0, 0, 0, 0],
+  [0, 65, 0, 0, 70, 120, 100, 0, 0, 0],
+  [45, 0, 0, 0, 80, 0, 0, 90, 0, 0],
+  [110, 50, 70, 80, 0, 60, 0, 150, 0, 0],
+  [0, 0, 120, 0, 60, 0, 75, 0, 70, 75],
+  [0, 0, 100, 0, 0, 75, 0, 0, 90, 80],
+  [130, 0, 0, 90, 150, 0, 0, 0, 100, 0],
+  [0, 0, 0, 0, 0, 70, 90, 100, 0, 40],
+  [0, 0, 0, 0, 0, 75, 80, 0, 40, 0],
+];
 
 
 </script>

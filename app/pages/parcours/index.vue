@@ -84,7 +84,6 @@ const results = ref(false);
 
 function runParcours() {
   if (!ville.value || !methode.value){
-    console.log("Non réussi")
     return;
   } 
 

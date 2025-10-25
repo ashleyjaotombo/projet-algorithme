@@ -1,6 +1,6 @@
 <template>
 
-<div id="mynetwork" style="height: 100%; width: 100%;" class="object-cover"></div>
+    <div id="mynetwork" style="height: 100%; width: 100%;" class="object-cover"></div>
   
 </template>
 
@@ -28,47 +28,24 @@ onMounted(() => {
     { id: 10, label: "GRENOBLE" },
   ]);
   edges.value = new DataSet([
-    { from: 1, to: 2, label: "75" },
-    { from: 1, to: 4, label: "45" },
-    { from: 1, to: 5, label: "110" },
-    { from: 1, to: 8, label: "130" },
-    { from: 2, to: 1, label: "75" },
-    { from: 2, to: 3, label: "65" },
-    { from: 2, to: 5, label: "50" },
-    { from: 3, to: 2, label: "65" },
-    { from: 3, to: 5, label: "70" },
-    { from: 3, to: 6, label: "120" },
-    { from: 3, to: 7, label: "100" },
-    { from: 4, to: 1, label: "45" },
-    { from: 4, to: 5, label: "80" },
-    { from: 4, to: 8, label: "90" },
-    { from: 5, to: 1, label: "110" },
-    { from: 5, to: 2, label: "50" },
-    { from: 5, to: 3, label: "70" },
-    { from: 5, to: 4, label: "80" },
-    { from: 5, to: 6, label: "60" },
-    { from: 5, to: 8, label: "150" },
-    { from: 6, to: 3, label: "120" },
-    { from: 6, to: 5, label: "60" },
-    { from: 6, to: 7, label: "75" },
-    { from: 6, to: 9, label: "70" },
-    { from: 6, to: 10,label: "75" },
-    { from: 7, to: 3, label: "100" },
-    { from: 7, to: 6, label: "75" },
-    { from: 7, to: 9, label: "90" },
-    { from: 7, to: 10,label: "80" },
-    { from: 8, to: 1, label: "130" },
-    { from: 8, to: 4, label: "90" },
-    { from: 8, to: 5, label: "150" },
-    { from: 8, to: 9, label: "100" },
-    { from: 9, to: 6, label: "70" },
-    { from: 9, to: 7, label: "90" },
-    { from: 9, to: 8, label: "100" },
-    { from: 9, to: 10, label: "40" },
-    { from: 10, to: 6, label: "75" },
-    { from: 10, to: 7, label: "80" },
-    { from: 10, to: 9, label: "40" },
-  ]);
+  { from: 1, to: 2, label: "75" },
+  { from: 1, to: 4, label: "45" },
+  { from: 1, to: 5, label: "110" },
+  { from: 2, to: 3, label: "65" },
+  { from: 2, to: 5, label: "50" },
+  { from: 3, to: 6, label: "120" },
+  { from: 3, to: 7, label: "100" },
+  { from: 4, to: 5, label: "80" },
+  { from: 4, to: 8, label: "90" },
+  { from: 5, to: 6, label: "60" },
+  { from: 5, to: 8, label: "150" },
+  { from: 6, to: 7, label: "75" },
+  { from: 6, to: 9, label: "70" },
+  { from: 7, to: 9, label: "90" },
+  { from: 8, to: 9, label: "100" },
+  { from: 9, to: 10, label: "40" },
+  { from: 10, to: 6, label: "75" },
+]);
 
   const container = document.getElementById("mynetwork");
 
@@ -109,8 +86,12 @@ onMounted(() => {
       borderWidth: 2,
     },
     edges: {
-      color: '#999',
-      font: { align: 'middle', size: 12, color: '#444' },
+    color: '#999',
+        font: { align: 'middle', size: 12, color: '#444' },
+        arrows: {
+            to: { enabled: true, scaleFactor: 0.8 }, // ✅ flèches activées ici
+        },
+        smooth: { type: "curvedCW", roundness: 0.1 }, // (optionnel) courbes plus lisibles
     },
     physics: {
       enabled: false,
