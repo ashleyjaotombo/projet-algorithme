@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { BFS } from '~/data/BFS';
-import { DFS } from '~/data/DFS';
+import { BFS } from '~/algorithmes/BFS';
+import { DFS } from '~/algorithmes/DFS';
 
 BFS("Caen");
 DFS("Caen");

@@ -75,7 +75,6 @@ export function BFS(nomVilleDepart) {
             etat[z] = "Vu";
             pere[z] = y;
             atraiter[j++] = { depart: y, arrivee: z, poids: MATRICE[y][z], départs: VILLES[y], arrivees: VILLES[z] };
-            console.log("Atraiter : ", atraiter[j - 1]);
         }
     }
 

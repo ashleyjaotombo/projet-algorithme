@@ -59,8 +59,8 @@
 
 <script setup>
 import { ref } from "vue";
-import { BFS } from "~/data/BFS";
-import { DFS } from "~/data/DFS";
+import { BFS } from "~/algorithmes/BFS";
+import { DFS } from "~/algorithmes/DFS";
 import GrapheDisplay from "~/components/GrapheDisplay.vue";
 import RetourButton from "@/components/RetourButton.vue";
 
@@ -84,7 +84,6 @@ const results = ref(false);
 
 function runParcours() {
   if (!ville.value || !methode.value){
-    console.log("Non réussi")
     return;
   } 
 

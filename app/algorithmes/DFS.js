@@ -27,7 +27,7 @@ export function DFS(nomVilleDepart) {
     const vu = Array(n).fill(false);
     const pere = Array(n).fill(null);
     const ordre = [];
-    const atraiter = []; // 🔹 on enregistre chaque transition {depart, arrivee, poids}
+    const atraiter = []; // on enregistre chaque transition {depart, arrivee, poids}
 
     //  Fonction récursive
     function explorer(u) {
