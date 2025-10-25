@@ -63,6 +63,7 @@ export function KRUSHKAL() {
         }
     }
 
+    //On parcourt l'arbre pour compter le poids total
     for (const { poids } of arbre){
         poidsTotal += poids;
     }

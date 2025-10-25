@@ -34,7 +34,7 @@ export function DIJKSTRA(nomVilleDepart, matrice) {
         if (u === -1) break; // aucune ville accessible restante
         visite[u] = true;
 
-        // Mise à jour des distances vers les voisines de u
+        // Mise à jour des distances vers les voisins de u s'il y a un meilleur chemin
         for (let v = 0; v < VILLES.length; v++) {
             if (!visite[v] && matrice[u][v] !== 0) {
                 const nouvelleDistance = distances[u] + matrice[u][v];
@@ -46,7 +46,7 @@ export function DIJKSTRA(nomVilleDepart, matrice) {
         }
     }
 
-    //  Fonction facultative pour reconstruire le chemin
+    // Fonction facultative pour reconstruire le chemin à afficher sur l'interface graphique
     function getChemin(villeArrivee) {
     const indexArrivee = VILLES.indexOf(villeArrivee);
     if (indexArrivee === -1) {
@@ -57,9 +57,13 @@ export function DIJKSTRA(nomVilleDepart, matrice) {
     const chemin = [];
     let current = indexArrivee;
 
+    //On part du noeud final, et on remonte tous les parents
+    //La boucle s'arrête quand le parent est nulle
     while (current !== null) {
-      const to = current;
-      const from = precedent[current];
+      const to = current; //to stock l'enfant
+      const from = precedent[current]; //from stock le parent
+
+      //Si le parent et l'enfant existe, on stocke le noeud
       if (to !== null && from !== null) {
         chemin.unshift({
           depart: from,
@@ -70,12 +74,15 @@ export function DIJKSTRA(nomVilleDepart, matrice) {
       current = from;
     }
 
+    //Si le chemin est nulle, on retourne un tableau vide d'arêtes
     if (chemin.length === 0) return [];
+
+    //Sinon on retourne le tableau des arêtes constituant le chemin
     return chemin;
-  }
+    }
 
     return {
-    distances,
-    getChemin,
-  };
+      distances,
+      getChemin,
+    };
 }
