@@ -13,7 +13,10 @@ DFS("Caen");
 KRUSHKAL();
 PRIM("Paris"); 
 DIJKSTRA("Paris");
-BELLMANFORD("Paris");
+const resultatat = BELLMANFORD("Paris");
+//console.log("\n--- Chemin Paris → Lyon ---");
+//console.log(resultatat.getChemin("Lyon")); // ["Paris", "Dijon", "Lyon"] par exemple
+
 FLOYD_WARSHALL();
 
 

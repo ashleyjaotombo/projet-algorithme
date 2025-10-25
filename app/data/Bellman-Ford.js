@@ -20,7 +20,7 @@ export function BELLMANFORD(nomVilleDepart) {
     const depart = VILLES.indexOf(nomVilleDepart);
     if (depart === -1) {
         console.error("Ville inconnue :", nomVilleDepart);
-        return;
+        return null;
     }
 
     // --- Initialisation ---
@@ -38,7 +38,7 @@ export function BELLMANFORD(nomVilleDepart) {
         }
     }
 
-    // --- Étape 1 : Relaxation des arêtes V-1 fois ---
+    // --- Relaxation ---
     for (let k = 0; k < VILLES.length - 1; k++) {
         for (const { u, v, poids } of arretes) {
             if (distances[u] + poids < distances[v]) {
@@ -48,23 +48,42 @@ export function BELLMANFORD(nomVilleDepart) {
         }
     }
 
-    // --- Étape 2 : Détection de cycle négatif ---
-    let cycleNegatif = false;
+    // --- Détection de cycle négatif ---
     for (const { u, v, poids } of arretes) {
         if (distances[u] + poids < distances[v]) {
-            cycleNegatif = true;
-            break;
+            console.error("⚠️ Le graphe contient un cycle de poids négatif !");
+            return null;
         }
     }
 
-    if (cycleNegatif) {
-        console.error("⚠️ Le graphe contient un cycle de poids négatif !");
-        return;
+    // --- Fonction pour reconstruire le chemin en indices ---
+    function getChemin(villeArrivee) {
+        const indexArrivee = VILLES.indexOf(villeArrivee);
+        if (indexArrivee === -1) {
+            console.error("Ville inconnue :", villeArrivee);
+            return [];
+        }
+
+        const chemin = [];
+        let current = indexArrivee;
+
+        while (current !== null) {
+            chemin.unshift(current);
+            current = precedent[current];
+        }
+
+        return chemin[0] === depart ? chemin : [];
     }
 
-    // --- Affichage final ---
-    console.log(`\nDistances minimales depuis ${nomVilleDepart} :`);
+    console.log(`\nDistances minimales depuis ${nomVilleDepart} (Bellman-Ford):`);
     for (let i = 0; i < VILLES.length; i++) {
         console.log(`${nomVilleDepart} → ${VILLES[i]} = ${distances[i]}`);
     }
+
+    // --- Retour simplifié ---
+    return {
+        villes: VILLES,
+        distances,
+        getChemin,
+    };
 }
