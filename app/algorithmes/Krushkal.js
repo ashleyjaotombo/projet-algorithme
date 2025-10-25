@@ -18,6 +18,7 @@ export function KRUSHKAL() {
     ];
 
     const arbre = [];
+    let poidsTotal = 0;
 
     //  Création des arêtes
     const arretes = [];
@@ -62,6 +63,10 @@ export function KRUSHKAL() {
         }
     }
 
-    return arbre;
+    for (const { poids } of arbre){
+        poidsTotal += poids;
+    }
+
+    return { arbre, poidsTotal};
 }
 

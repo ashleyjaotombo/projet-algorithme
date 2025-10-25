@@ -11,7 +11,7 @@
         <p class="ml-2 font-weight-medium">
           Graphe de référence pour les algorithmes :
         </p>
-        <GrapheDisplay v-model="resultat" class="w-100" style="height: 600px;" />
+        <GrapheDisplay v-model="arbre" class="w-100" style="height: 600px;" />
       </v-col>
 
       <v-col cols="5" class="d-flex align-center justify-center px-4">
@@ -59,7 +59,7 @@
             <p v-if="submit">Résultat de l'arbre couvrant : ({{ choix }})</p>
           <v-list density="compact" class="bg-teal-lighten-4 rounded-xl">
             <v-list-item
-              v-for="(edge, index) in resultat"
+              v-for="(edge, index) in arbre"
               :key="index"
             >
               <v-list-item-title>
@@ -67,6 +67,7 @@
                 ({{ edge.poids }} km)
               </v-list-item-title>
             </v-list-item>
+            <p class="font-weight-bold mx-4 my-2">Poids total : {{ poidsTotal }} km</p>
           </v-list>
           </v-container>
           
@@ -102,16 +103,20 @@ const ville = ref(null); //pour récupérer la ville choisie
 
 const active = ref(false);
 
-// Résultat du graphe (resultat est le v-model de GrapheDisplay)
+// Résultat du graphe (arbre est le v-model de GrapheDisplay)
 const resultat = ref([]);
 const submit = ref(false);
 const colorKrushkal = ref("teal-darken-3")
 const colorPrim = ref("teal-darken-3");
 const reload = ref(false);
+const poidsTotal = ref(null);
+const arbre = ref(null);
 
 // Fonction déclenchant l'algo de Krushkal
 function runAlgoKrushkal() {
   resultat.value = KRUSHKAL();
+  arbre.value = resultat.value.arbre;
+  poidsTotal.value = resultat.value.poidsTotal;
   submit.value = true;
   reload.value=false;
   colorKrushkal.value = "teal-lighten-2"
@@ -127,6 +132,8 @@ function runAlgoKrushkal() {
 // Fonction déclenchant l'algo de Prim
 function runAlgoPrim() {
   resultat.value = PRIM(ville.value);
+  arbre.value = resultat.value.arbre;
+  poidsTotal.value = resultat.value.poidsTotal;
   submit.value = true;
   colorPrim.value = "teal-lighten-2"
   colorKrushkal.value = "teal-darken-3"

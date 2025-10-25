@@ -20,6 +20,7 @@ export function PRIM(nomVilleDepart) {
 
 
     const arbre = [];
+    let poidsTotal = 0;
     const visite = Array(VILLES.length).fill(false);
     const debut = VILLES.indexOf(nomVilleDepart);
     visite[debut] = true; //Initialisation du début par rapoort au paramètre
@@ -51,6 +52,9 @@ export function PRIM(nomVilleDepart) {
         }
     }
 
+    for (const { poids } of arbre){
+        poidsTotal += poids;
+    }
 
-    return arbre;
+    return { arbre, poidsTotal};
 }
