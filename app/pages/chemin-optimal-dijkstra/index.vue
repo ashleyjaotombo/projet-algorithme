@@ -142,7 +142,7 @@ function run() {
   res.value = DIJKSTRA(ville.value, matrice.value);
   setTimeout(()=>{
     submit.value = true;
-  }, 1000)
+  }, 100)
 }
 
 

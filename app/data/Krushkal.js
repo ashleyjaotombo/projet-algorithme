@@ -37,9 +37,6 @@ export function KRUSHKAL() {
     // --- Tri des arêtes ---
     arretes.sort((a, b) => a.poids - b.poids);
 
-    console.log("\nAprès tri :");
-    console.log(arretes);
-
 
 
     // Initialisation : chaque ville est dans sa propre composante

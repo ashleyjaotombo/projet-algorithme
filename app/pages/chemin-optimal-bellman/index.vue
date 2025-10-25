@@ -12,7 +12,7 @@
        <p class="ml-2 font-weight-medium">
          Graphe de référence pour les algorithmes :
        </p>
-       <GrapheDisplay v-model="resultat" class="w-100" style="height: 600px;" />
+       <GrapheDisplay v-model="chemin" class="w-100" style="height: 600px;" />
      </v-col>
 
 
@@ -59,20 +59,34 @@
 
 
 
-         <v-container v-if="submit && choix ==='Bellman-Ford'">
-           <p>Résultat de l'algorithme : ({{ choix }})</p>
-           <v-list density="compact" class="bg-teal-lighten-4 rounded-xl">
-           <v-list-item
-             v-for="(value, index) in res"
-             :key="index"
-           >
-             <v-list-item-title>
-               {{ ville }} → {{ villes[index] }}
-               ({{ value }} km)
-             </v-list-item-title>
-           </v-list-item>
-         </v-list>
-         </v-container>
+         <v-container v-if="submit && choix === 'Bellman-Ford'">
+          <p>Résultat de l'algorithme : ({{ choix }})</p>
+          <v-list density="compact" class="bg-teal-lighten-4 rounded-xl">
+            <v-list-item
+              v-for="(value, index) in distances"
+              :key="index"
+            >
+              <v-row>
+                <v-col>
+                  {{ ville }} → {{ villes[index] }}
+                  ({{ value }} km)
+                </v-col>
+                <v-col>
+                  <v-btn
+                    size="small"
+                    @click="voirChemin(villes[index])"
+                  >
+                    Voir chemin
+                  </v-btn>
+                </v-col>
+              </v-row>
+              
+
+              
+            </v-list-item>
+          </v-list>
+        </v-container>
+
 
          <v-container v-if="submit && choix==='Floyd Warshall'">
            <p class="font-weight-bold mb-2">Résultat de l'algorithme : ({{ choix }})</p>
@@ -135,17 +149,18 @@ const ville = ref(null); //pour récupérer la ville choisie
 
 
 
-// Résultat du graphe (resultat est le v-model de GrapheDisplay)
-const resultat = ref([]);
+// Résultat du graphe (chemin est le v-model de GrapheDisplay)
 const submit = ref(false);
 const res = ref(null);
-const res2 = ref(null);
-
+const distances = ref(null);
+const chemin = ref(null);
 
 // Fonction déclenchant les algo
 function runBELLMANFORD(){
    choix.value = "Bellman-Ford"
    res.value = BELLMANFORD(ville.value);
+   console.log(res)
+   distances.value = res.value.distances;
    submit.value=true;
 }
 
@@ -156,6 +171,15 @@ function runFLOYD(){
    submit.value=true;
    console.log(res.value[0])
 }
+
+
+function voirChemin(villeArrivee) {
+  if (!res.value) return;
+
+  chemin.value = res.value.getChemin(villeArrivee);
+
+}
+
 
 
 </script>
