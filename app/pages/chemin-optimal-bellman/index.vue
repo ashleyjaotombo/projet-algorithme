@@ -142,7 +142,7 @@ const res = ref(null);
 const res2 = ref(null);
 
 
-// Fonction déclenchant l'algo de Krushkal
+// Fonction déclenchant les algo
 function runBELLMANFORD(){
    choix.value = "Bellman-Ford"
    res.value = BELLMANFORD(ville.value);
@@ -155,7 +155,7 @@ function runFLOYD(){
    res.value = FLOYD_WARSHALL(ville.value);
    submit.value=true;
    console.log(res.value[0])
- }
+}
 
 
 </script>

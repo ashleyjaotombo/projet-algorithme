@@ -46,11 +46,5 @@ export function FLOYD_WARSHALL() {
         }
     }
 
-    console.log("Matrice des plus courts chemins :");
-    for (let i = 0; i < n; i++) {
-        const ligne = dist[i].map(val => (val === Infinity ? "∞" : val));
-        console.log(`${VILLES[i]} : ${ligne.join(" | ")}`);
-    }
-
     return dist;
 }

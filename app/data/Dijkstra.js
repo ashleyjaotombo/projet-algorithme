@@ -63,4 +63,6 @@ export function DIJKSTRA(nomVilleDepart) {
     for (let i = 0; i < VILLES.length; i++) {
         console.log(`${nomVilleDepart} → ${VILLES[i]} = ${distances[i]}`);
     }
+
+    return distances;
 }
