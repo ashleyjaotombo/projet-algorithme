@@ -1,7 +1,7 @@
 <template>
   <v-col class="w-100 ma-0" cols="12">
     <p class="text-button text-green text-center font-weight-bold mb-4">
-      Algorithme de l'arbre couvrant minimal — KRUSKAL
+      Algorithme de l'arbre couvrant minimal
     </p>
 
     <v-row>
